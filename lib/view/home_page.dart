@@ -16,13 +16,7 @@ class _HomePageState extends State<HomePage> {
 final TicketController ticketController = Get.put(TicketController());
   bool isSelected = false;
 
-  // final chartData = [
-  //           ChartData('', 35,Colors.blue),
-  //           ChartData('', 35,Colors.blue),
-  //           ChartData('', 35,Colors.blue),
-  //           ChartData('', 35,Colors.blue),
-           
-  //       ];
+ 
 
   @override
   void initState() {
@@ -48,6 +42,7 @@ final TicketController ticketController = Get.put(TicketController());
               child: Column(
               children: <Widget>[
                   _tabSection(context,ticketController.dayData,ticketController.weekData,ticketController.monthData,ticketController.yearData),
+                // graphSection(context,ticketController.mydayData,ticketController.myweekData,ticketController.mymonthData,ticketController.myyearData)
               ],
               ),
             );
@@ -89,67 +84,112 @@ final TicketController ticketController = Get.put(TicketController());
  }
 
 gridViewSection(dayData){
-  return Column(
-    children: [
-      ListView.builder(
-        padding: const EdgeInsets.only(left: 1.8, right: 0.0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: dayData.length,
-        shrinkWrap: true,
-        itemBuilder: (context, indx) {
-          return Wrap(
-            children: List.generate(dayData[indx].length, (index) => 
-                   TicketingTile(
-                    ticketNumber:dayData[indx][index].value,
-                    ticketname: dayData[indx][index].label,
-                    backgroundColor: Colors.white,
-                    description: 'Ticketing',
-                    icon: const Icon(Icons.airplane_ticket),
-                    imageUrl: '',
-                    name: '',
-                    onTap: () {
-                }
-              )
-            ),
-          );
-        }
-      ),
-      // graphDesign(),
-    ],
+  return SizedBox(
+    child: ListView.builder(
+      padding: const EdgeInsets.only(left: 1.8, right: 0.0),
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: dayData.length,
+      shrinkWrap: true,
+      itemBuilder: (context, indx) {
+        return Wrap(
+          children: List.generate(dayData[indx].length, (index) => 
+                 TicketingTile(
+                  ticketNumber:dayData[indx][index].value,
+                  ticketname: dayData[indx][index].label,
+                  backgroundColor: Colors.white,
+                  description: 'Ticketing',
+                  icon: const Icon(Icons.airplane_ticket),
+                  imageUrl: '',
+                  name: '',
+                  onTap: () {
+              }
+            )
+          ),
+        );
+      }
+    ),
   );
 }
  
-//  graphDesign(){
-//   return   Column(
-//     children: [
+ graphDesign(context){
+  
+  
+    return Column(
+      children: [
+     
+      
+      ],
+    );
+ }
 
-//   //     SfCartesianChart(
-//   //     series: <ChartSeries>[
-//   //         BarSeries<ChartData, double>(
-//   //             dataSource: chartData,
-//   //             xValueMapper: (ChartData data, _) => data.x,
-//   //             yValueMapper: (ChartData data, _) => data.y,
-//   //             // Width of the bars
-//   //             width: 0.6, 
-//   //             // Spacing between the bars
-//   //             spacing: 0.3 
-//   //         )
-//   //     ]
-//   // ),
-//   //   ],
-//   // );
-//  }
 
-// class ChartData {
-//   ChartData(this.x, this.y, this.color);
-//   final String x;
-//   final double y;
-//   final Color? color;
-// }
-
+// gridview
 Widget _tabSection(context,dayData,weekData,monthData,yearData) {
   return Padding(
     padding: const EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0),
+    child: DefaultTabController(
+      length: 4,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Container(
+                
+                padding: const EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(
+                    5.0,
+                  ),
+                ),
+                child: TabBar(
+                  // give the indicator a decoration (color and border radius)
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      7.0,
+                    ),
+                    color: Colors.white,
+                  ),
+                  labelColor: const Color(0xff8d6b4f),
+                  unselectedLabelColor: const Color(0xff8d6b4f),
+                  tabs: const [
+                    Tab(
+                      text: 'Day',
+                      height: 30,
+                    ),
+                    Tab(
+                      text: 'Week',
+                      height: 30,
+                    ),
+                     Tab(
+                      text: 'Month',
+                      height: 30,
+                    ),
+                     Tab(
+                      text: 'Year',
+                      height: 30,
+                    ),
+                  ],
+                ),
+              ),
+          SizedBox( 
+            //Add this to give height
+            height: MediaQuery.of(context).size.height,
+            child: TabBarView(children: [
+             gridViewSection(dayData),
+             gridViewSection(weekData),
+             gridViewSection(monthData),
+             gridViewSection(yearData),
+            ]),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget graphSection(context,dayData,weekData,monthData,yearData) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 5.0,left: 10.0,right: 10.0),
     child: DefaultTabController(
       length: 4,
       child: Column(
@@ -198,10 +238,11 @@ Widget _tabSection(context,dayData,weekData,monthData,yearData) {
             //Add this to give height
             height: MediaQuery.of(context).size.height,
             child: TabBarView(children: [
-             gridViewSection(dayData),
-             gridViewSection(weekData),
-             gridViewSection(monthData),
-             gridViewSection(yearData),
+             Container(),
+             Container(),
+             Container(),
+             Container(),
+            
             ]),
           ),
         ],
