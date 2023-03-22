@@ -37,7 +37,7 @@ dependencies:
   #use for state management
   get: ^4.6.5
   #use for network call
-  dio: ^4.0.6
+  dio: ^5.0.3
   #cache_data storage
   get_storage: ^2.0.3
   charts_flutter: ^0.10.0
